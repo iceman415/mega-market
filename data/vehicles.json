@@ -1,0 +1,67 @@
+[
+  {
+    "id": "1779669843760",
+    "brand": "Mercedes-AMG",
+    "model": "GLE 63 S Coup\u00e9",
+    "year": "2021",
+    "price": "116000.00",
+    "mileage": "350000",
+    "location": "Miami, FL",
+    "description": "Almost new vehicle - One extra tire and a full tank of fuel",
+    "images": [
+      "/mercedes/mercedes.jpg",
+      "/mercedes/mercedes-2.jpeg",
+      "/mercedes/mercedes-3.jpeg"
+    ]
+  },
+  {
+    "id": "1779672153933",
+    "brand": "BMW",
+    "model": "X5",
+    "year": "2025",
+    "price": "40000.00",
+    "mileage": "10000",
+    "location": "Dealership",
+    "description": "Usado como nuevo - No le duele nada - Todo al 100% - Listo pa' la carretera",
+    "images": [
+      "/bmw/bmw.jpg",
+      "/bmw/bmw-2.jpeg",
+      "/bmw/bmw-3.jpg"
+    ]
+  },
+  {
+    "id": "1779672986526",
+    "brand": "Toyota",
+    "model": "RAV4",
+    "year": "2026",
+    "price": "50000.00",
+    "mileage": "2000",
+    "location": "Dealership",
+    "description": "Usado como nuevo - No le duele nada - Todo al 100%  - T\u00edtulo en mano - Limpio - No ofertas tontas",
+    "images": [
+      "/toyota/toyota.webp",
+      "/toyota/toyota-2.jpeg",
+      "/toyota/toyota-3.jpeg",
+      "/toyota/toyota-4.jpeg",
+      "/toyota/toyota-5.jpg"
+    ]
+  },
+  {
+    "id": "1780276558663",
+    "brand": "Lexus",
+    "model": "RX350",
+    "year": "2012",
+    "price": "7000.00",
+    "mileage": "200000",
+    "location": "MILWAUKEE",
+    "description": "Uuado como nuevo, hoy no fio ma\u00f1ana si",
+    "images": [
+      "/Lexus1.webp",
+      "/Lexus2.webp",
+      "/Lexus3.webp",
+      "/Lexus4.webp",
+      "/Lexus5.webp",
+      "/Lexus6.webp"
+    ]
+  }
+]

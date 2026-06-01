@@ -1,0 +1,22 @@
+[
+  {
+    "id": "17000000011",
+    "name": "Toyota Camry Alternator",
+    "partNumber": "TC-ALT-2022",
+    "compatibility": "Toyota Camry 2018-2023",
+    "price": "189.99",
+    "description": "Brand new OEM alternator for Toyota Camry. 130 amp output, includes pulley.",
+    "location": "Dealership",
+    "images": ["/part-1.jpg"]
+  },
+  {
+    "id": "17000000012",
+    "name": "Honda Accord Brake Pads",
+    "partNumber": "HA-BP-2021",
+    "compatibility": "Honda Accord 2018-2022",
+    "price": "79.99",
+    "description": "Premium ceramic brake pads, front set. Low dust, quiet operation.",
+    "location": "Dealership",
+    "images": ["/part-2.jpg"]
+  }
+]
