@@ -55,8 +55,8 @@ export function Footer() {
                 123 Auto Drive, Car City, CC 12345
               </li>
               <li>
-                <a href="tel:+1234567890" className="font-inter text-gray-400 hover:text-white transition-colors">
-                  (123) 456-7890
+                <a href="tel:+0000000000" className="font-inter text-gray-400 hover:text-white transition-colors">
+                  (123) 000-0000
                 </a>
               </li>
               <li>
