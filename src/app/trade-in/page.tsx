@@ -30,7 +30,7 @@ export default function TradeInPage() {
           transition={{ duration: 0.5 }}
         >
           <h1 className="font-oswald text-2xl sm:text-3xl text-gray-900 mb-4">
-            For a quote<br />Provide Year, Make, Model
+            For a quote<br />Provide Year, Make, Model<br />Any Condition,Junks Mainly
           </h1>
 
           <a
