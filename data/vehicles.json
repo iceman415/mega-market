@@ -36,5 +36,27 @@
       "/H7.webp",
       "/H9.webp"
     ]
+  },
+  {
+    "id": "1780707959436",
+    "brand": "Chevy Equinox",
+    "model": "Equinox",
+    "year": "2011",
+    "price": "5800.00",
+    "mileage": "68.000",
+    "location": "Milwaukee",
+    "description": "Chevy Equinox 2011 - 68K Miles - $5,800 - \u2757\ufe0fCASH & WE ACCEPT JUNK CARS AS TRADE-INS - Plates & Fees Included - Runs and Drives - No Check Engine Lights - Emissions Ready - Nice Interior - Newer Tires - A/C & Heat",
+    "images": [
+      "/C1.webp",
+      "/C2.webp",
+      "/C3.webp",
+      "/C4.webp",
+      "/C5.webp",
+      "/C6.webp",
+      "/C7.webp",
+      "/C8.webp",
+      "/C9.webp",
+      "/C10.webp"
+    ]
   }
 ]
