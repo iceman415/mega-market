@@ -5,8 +5,8 @@ import { Phone, MessageCircle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
 
-const PHONE = "+1234567890";
-const PHONE_DISPLAY = "(123) 456-7890";
+const PHONE = "(262) 995-5680";
+const PHONE_DISPLAY = "(262 995-5680";
 
 export default function TradeInPage() {
   return (

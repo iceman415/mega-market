@@ -52,16 +52,16 @@ export function Footer() {
             <h4 className="font-oswald text-lg mb-4">Contact</h4>
             <ul className="space-y-2">
               <li className="font-inter text-gray-400">
-                123 Auto Drive, Car City, CC 12345
+                Milwaukee,wi
               </li>
               <li>
-                <a href="tel:+0000000000" className="font-inter text-gray-400 hover:text-white transition-colors">
-                  (123) 000-0000
+                <a href="tel:(262) 995-5680" className="font-inter text-gray-400 hover:text-white transition-colors">
+                  (262) 995-5680
                 </a>
               </li>
               <li>
                 <a href="mailto:info@megamarket.com" className="font-inter text-gray-400 hover:text-white transition-colors">
-                  info@megamarket.com
+                  megamarket414@gmail.com
                 </a>
               </li>
             </ul>

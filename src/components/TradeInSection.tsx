@@ -21,7 +21,7 @@ export function TradeInSection() {
             We accept all kinds of vehicles in any condition. Get a fair quote today!
           </p>
 
-          <a href="tel:+1234567890">
+          <a href="tel:(262) 995-5680">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
