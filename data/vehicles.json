@@ -7,7 +7,7 @@
     "price": "7000.00",
     "mileage": "200000",
     "location": "MILWAUKEE",
-    "description": "Uuado como nuevo, hoy no fio ma\u00f1ana si",
+    "description": "Lexus RX350 200K miles $7000 OBO - \u2757\ufe0fCASH & WE ACCEPT JUNK CARS AS TRADE-INS - Plates & fees included - No check engine lights - Highway ready - Emissions ready - Newer tires - Fully loaded - Pretty rust clean - No leaks - AC/HEAT - Everything works as it should - Come and check it out",
     "images": [
       "/Lexus1.webp",
       "/Lexus2.webp",
@@ -57,6 +57,45 @@
       "/C8.webp",
       "/C9.webp",
       "/C10.webp"
+    ]
+  },
+  {
+    "id": "1780756172309",
+    "brand": "GMC",
+    "model": "Terrain",
+    "year": "2010",
+    "price": "4800.00",
+    "mileage": "194.000",
+    "location": "Milwaukee",
+    "description": "GMC TERRAIN 2010 194K MILES $4800 OBO - CASH & WE ACCEPT JUNK CARS AS TRADE-INS - Plates & fees included - Runs & drives - Emissions ready - No check engine lights - Fully loaded - FWD - V6 - Good tires",
+    "images": [
+      "/g1.webp",
+      "/g2.webp",
+      "/g3.webp",
+      "/g4.webp",
+      "/g5.webp",
+      "/g6.webp",
+      "/g7.webp",
+      "/g8.webp",
+      "/g9.webp"
+    ]
+  },
+  {
+    "id": "1780839853910",
+    "brand": "Chevy",
+    "model": "Equinox",
+    "year": "2013",
+    "price": "5000.00",
+    "mileage": "94k",
+    "location": "Milwaukee",
+    "description": "Chevy Equinox 2013 - 94K miles - $5,000 OBO - CASH & WE ACCEPT JUNK CARS AS TRADE-INS - VIN 2GNFL1EK8D6184777 - Clean title - Starts, runs & drives - Emissions ready - Newer, nice wheels & tires - Needs passenger side 2 broken windows - Needs front fender shown in pics",
+    "images": [
+      "/ee1.webp",
+      "/e2.webp",
+      "/e3.webp",
+      "/e4.webp",
+      "/e5.webp",
+      "/e6.webp"
     ]
   }
 ]

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Footer } from "@/components/Footer";
 
 const PHONE = "(262) 995-5680";
-const PHONE_DISPLAY = "(262 995-5680";
+const PHONE_DISPLAY = "(262) 995-5680";
 
 export default function TradeInPage() {
   return (
