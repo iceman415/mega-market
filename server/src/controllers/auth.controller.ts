@@ -33,10 +33,11 @@ export const authController = {
       { expiresIn: "7d" }
     );
 
+    const isProd = process.env.NODE_ENV === "production";
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax" as const,
+      secure: isProd,
+      sameSite: (isProd ? "none" : "lax") as "none" | "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     };
     res.cookie("token", token, cookieOptions);
@@ -112,10 +113,11 @@ export const authController = {
   },
 
   async logout(req: Request, res: Response) {
+    const isProd = process.env.NODE_ENV === "production";
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: isProd,
+      sameSite: (isProd ? "none" : "lax") as "none" | "lax",
     });
     res.json({ message: "Logged out" });
   },
