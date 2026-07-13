@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   Car,
   Package,
+  ShoppingBag,
   LogOut,
   LayoutDashboard,
   Home,
@@ -12,7 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store";
-import { useVehicles, useParts } from "@/hooks";
+import { useVehicles, useParts, useClothing } from "@/hooks";
 import { useRouter } from "next/navigation";
 import { DashboardStatSkeleton } from "@/components/AdminSkeleton";
 
@@ -21,6 +22,7 @@ export default function AdminDashboard() {
   const router = useRouter();
   const { data: vehicles } = useVehicles();
   const { data: parts } = useParts();
+  const { data: clothing } = useClothing();
 
   const handleLogout = () => {
     logout();
@@ -41,6 +43,13 @@ export default function AdminDashboard() {
       icon: Package,
       color: "bg-amber-500",
       href: "/admin/parts",
+    },
+    {
+      label: "Clothing",
+      count: clothing?.length ?? 0,
+      icon: ShoppingBag,
+      color: "bg-green-500",
+      href: "/admin/clothing",
     },
   ];
 
@@ -140,7 +149,7 @@ export default function AdminDashboard() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="grid md:grid-cols-2 gap-6"
+          className="grid md:grid-cols-3 gap-6"
         >
           <Link href="/admin/vehicles/new">
             <motion.div
@@ -175,6 +184,24 @@ export default function AdminDashboard() {
               <p className="font-oswald text-xl">Add New Part</p>
               <p className="font-inter text-sm text-white/70 mt-2">
                 Create a new part listing
+              </p>
+            </motion.div>
+          </Link>
+          <Link href="/admin/clothing/new">
+            <motion.div
+              whileHover={{ scale: 1.03, boxShadow: "0 10px 30px -10px rgba(34,197,94,0.3)" }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl p-8 text-center cursor-pointer transition-all"
+            >
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut", delay: 1 }}
+              >
+                <ShoppingBag className="w-10 h-10 mx-auto mb-3" />
+              </motion.div>
+              <p className="font-oswald text-xl">Add New Clothing</p>
+              <p className="font-inter text-sm text-white/70 mt-2">
+                Create a new clothing listing
               </p>
             </motion.div>
           </Link>

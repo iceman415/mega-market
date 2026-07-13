@@ -1,8 +1,9 @@
 import { VehicleSkeleton } from "./VehicleSkeleton";
 import { PartSkeleton } from "./PartSkeleton";
+import { ClothingSkeleton } from "./ClothingSkeleton";
 
 interface InventorySkeletonProps {
-  activeSection: "inventory" | "parts";
+  activeSection: "inventory" | "parts" | "clothing";
 }
 
 export function InventorySkeleton({ activeSection }: InventorySkeletonProps) {
@@ -13,6 +14,8 @@ export function InventorySkeleton({ activeSection }: InventorySkeletonProps) {
       {skeletons.map((i) =>
         activeSection === "inventory" ? (
           <VehicleSkeleton key={i} />
+        ) : activeSection === "clothing" ? (
+          <ClothingSkeleton key={i} />
         ) : (
           <PartSkeleton key={i} />
         )

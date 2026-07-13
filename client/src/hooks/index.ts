@@ -2,13 +2,15 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   vehicleService,
   partService,
+  clothingService,
   searchService,
   authService,
 } from "@/services";
-import { Vehicle, Part } from "@/types";
+import { Vehicle, Part, Clothing } from "@/types";
 
 const VEHICLES_KEY = ["vehicles"] as const;
 const PARTS_KEY = ["parts"] as const;
+const CLOTHING_KEY = ["clothing"] as const;
 
 export function useVehicles() {
   return useQuery({
@@ -105,6 +107,47 @@ export function useDeletePart() {
   return useMutation({
     mutationFn: (id: string) => partService.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: PARTS_KEY }),
+  });
+}
+
+export function useClothing() {
+  return useQuery({
+    queryKey: CLOTHING_KEY,
+    queryFn: clothingService.getAll,
+    staleTime: 60_000,
+  });
+}
+
+export function useClothingItem(id: string) {
+  return useQuery({
+    queryKey: ["clothing", id],
+    queryFn: () => clothingService.getById(id),
+    enabled: !!id,
+  });
+}
+
+export function useCreateClothing() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (data: Partial<Clothing>) => clothingService.create(data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: CLOTHING_KEY }),
+  });
+}
+
+export function useUpdateClothing() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Partial<Clothing> }) =>
+      clothingService.update(id, data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: CLOTHING_KEY }),
+  });
+}
+
+export function useDeleteClothing() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => clothingService.delete(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: CLOTHING_KEY }),
   });
 }
 

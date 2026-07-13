@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { vehicleService } from "@/services/vehicle.service";
 import { partService } from "@/services/part.service";
+import { clothingService } from "@/services/clothing.service";
 
 export const searchController = {
   async globalSearch(req: Request, res: Response) {
@@ -10,11 +11,12 @@ export const searchController = {
       return;
     }
 
-    const [vehicles, parts] = await Promise.all([
+    const [vehicles, parts, clothing] = await Promise.all([
       vehicleService.search(query),
       partService.search(query),
+      clothingService.search(query),
     ]);
 
-    res.json({ vehicles, parts });
+    res.json({ vehicles, parts, clothing });
   },
 };

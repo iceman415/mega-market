@@ -4,16 +4,17 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar, HeroCarousel, InventoryGrid, TradeInSection, Footer, FloatingCTA, SearchBar } from "@/components";
 import { useAppStore } from "@/store";
-import { useVehicles, useParts } from "@/hooks";
+import { useVehicles, useParts, useClothing } from "@/hooks";
 import { InventorySkeleton } from "@/components/InventorySkeleton";
 
 export default function Home() {
   const { activeSection } = useAppStore();
   const { data: vehicles, isLoading: vehiclesLoading } = useVehicles();
   const { data: parts, isLoading: partsLoading } = useParts();
+  const { data: clothing, isLoading: clothingLoading } = useClothing();
   const [showSearch, setShowSearch] = useState(false);
 
-  const loading = vehiclesLoading || partsLoading;
+  const loading = vehiclesLoading || partsLoading || clothingLoading;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -39,11 +40,13 @@ export default function Home() {
             className="py-8"
           >
             <h2 className="font-oswald text-2xl md:text-3xl text-gray-900 mb-2">
-              {activeSection === "inventory" ? "Featured Vehicles" : "Auto Parts"}
+              {activeSection === "inventory" ? "Featured Vehicles" : activeSection === "clothing" ? "Clothing" : "Auto Parts"}
             </h2>
             <p className="font-inter text-gray-500">
               {activeSection === "inventory"
                 ? "Browse our selection of quality vehicles"
+                : activeSection === "clothing"
+                ? "Shop our latest clothing"
                 : "Find the right parts for your vehicle"}
             </p>
           </motion.div>
@@ -54,6 +57,7 @@ export default function Home() {
             <InventoryGrid
               vehicles={vehicles || []}
               parts={parts || []}
+              clothing={clothing || []}
               activeSection={activeSection}
             />
           )}

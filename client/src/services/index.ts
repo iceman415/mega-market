@@ -1,6 +1,6 @@
 import axios from "axios";
 import { config } from "@/config";
-import { Vehicle, Part, SearchResult, AuthResponse, VerifyResponse } from "@/types";
+import { Vehicle, Part, Clothing, SearchResult, AuthResponse, VerifyResponse } from "@/types";
 import { useAuthStore } from "@/store";
 
 const api = axios.create({
@@ -37,6 +37,15 @@ export const partService = {
   update: (id: string, data: Partial<Part>) =>
     api.put<Part>(`/parts/${id}`, data).then((r) => r.data),
   delete: (id: string) => api.delete(`/parts/${id}`).then((r) => r.data),
+};
+
+export const clothingService = {
+  getAll: () => api.get<Clothing[]>("/clothing").then((r) => r.data),
+  getById: (id: string) => api.get<Clothing>(`/clothing/${id}`).then((r) => r.data),
+  create: (data: Partial<Clothing>) => api.post<Clothing>("/clothing", data).then((r) => r.data),
+  update: (id: string, data: Partial<Clothing>) =>
+    api.put<Clothing>(`/clothing/${id}`, data).then((r) => r.data),
+  delete: (id: string) => api.delete(`/clothing/${id}`).then((r) => r.data),
 };
 
 export const searchService = {

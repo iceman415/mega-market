@@ -8,6 +8,7 @@ import { FRONTEND_URL } from "@/config/env";
 import authRoutes from "@/routes/auth.routes";
 import vehicleRoutes from "@/routes/vehicle.routes";
 import partRoutes from "@/routes/part.routes";
+import clothingRoutes from "@/routes/clothing.routes";
 import searchRoutes from "@/routes/search.routes";
 import uploadRoutes from "@/routes/upload.routes";
 
@@ -36,6 +37,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/parts", partRoutes);
+app.use("/api/clothing", clothingRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/upload", uploadRoutes);
 

@@ -10,3 +10,4 @@ export { default as SoldBadge } from "./SoldBadge";
 export { default as ImageViewer } from "./ImageViewer";
 export { default as VehicleCard } from "./VehicleCard";
 export { default as PartCard } from "./PartCard";
+export { default as ClothingCard } from "./ClothingCard";

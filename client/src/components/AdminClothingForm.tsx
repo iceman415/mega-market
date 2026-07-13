@@ -10,35 +10,34 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { SiYoutube } from "react-icons/si";
-import { Vehicle } from "@/types";
+import { Clothing } from "@/types";
 import { uploadService } from "@/services";
 import { compressImage } from "@/lib/image";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-interface AdminVehicleFormProps {
-  initial?: Partial<Vehicle>;
-  onSubmit: (data: Partial<Vehicle>) => Promise<void>;
+interface AdminClothingFormProps {
+  initial?: Partial<Clothing>;
+  onSubmit: (data: Partial<Clothing>) => Promise<void>;
   isPending: boolean;
 }
 
-export function AdminVehicleForm({
+export function AdminClothingForm({
   initial,
   onSubmit,
   isPending,
-}: AdminVehicleFormProps) {
-  const [brand, setBrand] = useState(initial?.brand ?? "");
-  const [model, setModel] = useState(initial?.model ?? "");
-  const [year, setYear] = useState(initial?.year ?? "");
+}: AdminClothingFormProps) {
+  const [name, setName] = useState(initial?.name ?? "");
   const [price, setPrice] = useState(
     initial?.price ? Number(initial.price).toFixed(2) : ""
   );
-  const [mileage, setMileage] = useState(initial?.mileage ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
   const [location, setLocation] = useState(initial?.location ?? "");
   const [sold, setSold] = useState(initial?.sold ?? false);
   const [images, setImages] = useState<string[]>(initial?.images ?? []);
   const [youtubeUrl, setYoutubeUrl] = useState(initial?.youtubeUrl ?? "");
+  const [size, setSize] = useState(initial?.size ?? "");
+  const [color, setColor] = useState(initial?.color ?? "");
   const [uploading, setUploading] = useState(false);
   const [deletingIdx, setDeletingIdx] = useState<number | null>(null);
 
@@ -84,65 +83,35 @@ export function AdminVehicleForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onSubmit({
-      brand,
-      model,
-      year,
+      name,
       price,
-      mileage,
       description,
       location,
       sold,
       images,
       youtubeUrl: youtubeUrl || null,
+      size: size || null,
+      color: color || null,
     });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block font-inter text-sm text-gray-700 mb-1.5 font-medium">
-            Brand
-          </label>
-          <input
-            type="text"
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-            placeholder="e.g. Toyota"
-            className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none transition-all"
-            required
-          />
-        </div>
-        <div>
-          <label className="block font-inter text-sm text-gray-700 mb-1.5 font-medium">
-            Model
-          </label>
-          <input
-            type="text"
-            value={model}
-            onChange={(e) => setModel(e.target.value)}
-            placeholder="e.g. Camry"
-            className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none transition-all"
-            required
-          />
-        </div>
+      <div>
+        <label className="block font-inter text-sm text-gray-700 mb-1.5 font-medium">
+          Name
+        </label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="e.g. Mega Market Logo Tee"
+          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none transition-all"
+          required
+        />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div>
-          <label className="block font-inter text-sm text-gray-700 mb-1.5 font-medium">
-            Year
-          </label>
-          <input
-            type="text"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-            placeholder="e.g. 2020"
-            inputMode="numeric"
-            className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none transition-all"
-            required
-          />
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block font-inter text-sm text-gray-700 mb-1.5 font-medium">
             Price
@@ -154,7 +123,7 @@ export function AdminVehicleForm({
             onBlur={() => {
               if (price !== "") setPrice(Number(price).toFixed(2));
             }}
-            placeholder="e.g. 25000"
+            placeholder="e.g. 29.99"
             inputMode="decimal"
             className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none transition-all"
             required
@@ -162,31 +131,17 @@ export function AdminVehicleForm({
         </div>
         <div>
           <label className="block font-inter text-sm text-gray-700 mb-1.5 font-medium">
-            Mileage
+            Location
           </label>
           <input
             type="text"
-            value={mileage}
-            onChange={(e) => setMileage(e.target.value)}
-            placeholder="e.g. 45000 mi"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="e.g. Miami, FL"
             className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none transition-all"
             required
           />
         </div>
-      </div>
-
-      <div>
-        <label className="block font-inter text-sm text-gray-700 mb-1.5 font-medium">
-          Location
-        </label>
-        <input
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="e.g. Miami, FL"
-          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none transition-all"
-          required
-        />
       </div>
 
       <div>
@@ -197,10 +152,37 @@ export function AdminVehicleForm({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          placeholder="Describe the vehicle condition, features, history..."
+          placeholder="Describe the item, material, sizing info..."
           className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none resize-none transition-all"
           required
         />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block font-inter text-sm text-gray-700 mb-1.5 font-medium">
+            Size
+          </label>
+          <input
+            type="text"
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
+            placeholder="e.g. S, M, L, XL"
+            className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none transition-all"
+          />
+        </div>
+        <div>
+          <label className="block font-inter text-sm text-gray-700 mb-1.5 font-medium">
+            Color
+          </label>
+          <input
+            type="text"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            placeholder="e.g. Black, White, Red"
+            className="w-full px-4 py-2.5 rounded-xl border border-gray-300 font-inter text-sm focus:border-mega-blue focus:ring-2 focus:ring-mega-blue/20 outline-none transition-all"
+          />
+        </div>
       </div>
 
       <div>
@@ -306,9 +288,9 @@ export function AdminVehicleForm({
               {initial ? "Updating..." : "Creating..."}
             </span>
           ) : initial ? (
-            "Update Vehicle"
+            "Update Clothing"
           ) : (
-            "Create Vehicle"
+            "Create Clothing"
           )}
         </Button>
       </motion.div>

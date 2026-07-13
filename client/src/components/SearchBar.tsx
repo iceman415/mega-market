@@ -25,7 +25,7 @@ export default function SearchBar({ onClose }: SearchBarProps) {
       const data = await search(trimmed);
       setResults(data);
     } catch {
-      setResults({ vehicles: [], parts: [] });
+      setResults({ vehicles: [], parts: [], clothing: [] });
     } finally {
       setIsSearching(false);
     }
@@ -37,7 +37,7 @@ export default function SearchBar({ onClose }: SearchBarProps) {
   };
 
   const totalResults =
-    (results?.vehicles.length ?? 0) + (results?.parts.length ?? 0);
+    (results?.vehicles.length ?? 0) + (results?.parts.length ?? 0) + (results?.clothing.length ?? 0);
 
   return (
     <div className="relative w-full bg-white shadow-lg">
@@ -47,7 +47,7 @@ export default function SearchBar({ onClose }: SearchBarProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Search vehicles and parts..."
+          placeholder="Search vehicles, parts and clothing..."
           className="flex-1 rounded-full border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-mega-blue focus:ring-1 focus:ring-mega-blue font-inter"
           autoFocus
         />
@@ -136,6 +136,42 @@ export default function SearchBar({ onClose }: SearchBarProps) {
                       </p>
                       <p className="text-xs text-gray-500">
                         {p.partNumber} &middot; ${Number(p.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {results.clothing.length > 0 && (
+            <div className="border-t border-gray-100 py-3">
+              <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 font-oswald">
+                Clothing ({results.clothing.length})
+              </h4>
+              <div className="space-y-2">
+                {results.clothing.map((c) => (
+                  <Link
+                    key={c.id}
+                    href={`/clothing/${c.id}`}
+                    onClick={onClose}
+                    className="flex items-center gap-3 rounded-lg p-2 transition-colors hover:bg-gray-100"
+                  >
+                    <div className="relative h-12 w-16 shrink-0 overflow-hidden rounded">
+                      <Image
+                        src={c.images[0] || "/placeholder.svg"}
+                        alt={c.name}
+                        fill
+                        className="object-cover"
+                        sizes="64px"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1 font-inter">
+                      <p className="truncate text-sm font-medium text-gray-900">
+                        {c.name}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        ${Number(c.price).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </p>
                     </div>
                   </Link>

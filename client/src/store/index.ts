@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { User } from "@/types";
 import { authService } from "@/services";
 
-type Section = "inventory" | "parts";
+type Section = "inventory" | "parts" | "clothing";
 
 interface AppState {
   activeSection: Section;

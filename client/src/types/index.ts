@@ -29,9 +29,25 @@ export interface Part {
   updatedAt: string;
 }
 
+export interface Clothing {
+  id: string;
+  name: string;
+  price: string;
+  description: string;
+  location: string;
+  images: string[];
+  sold: boolean;
+  youtubeUrl: string | null;
+  size: string | null;
+  color: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface SearchResult {
   vehicles: Vehicle[];
   parts: Part[];
+  clothing: Clothing[];
 }
 
 export interface User {

@@ -2,14 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import type { Vehicle, Part } from "@/types";
+import type { Vehicle, Part, Clothing } from "@/types";
 import VehicleCard from "./VehicleCard";
 import PartCard from "./PartCard";
+import ClothingCard from "./ClothingCard";
 
 interface InventoryGridProps {
   vehicles: Vehicle[];
   parts: Part[];
-  activeSection: "inventory" | "parts";
+  clothing: Clothing[];
+  activeSection: "inventory" | "parts" | "clothing";
 }
 
 const containerVariants = {
@@ -34,10 +36,13 @@ const itemVariants = {
 export default function InventoryGrid({
   vehicles,
   parts,
+  clothing,
   activeSection,
 }: InventoryGridProps) {
   const router = useRouter();
   const isInventory = activeSection === "inventory";
+  const isParts = activeSection === "parts";
+  const isClothing = activeSection === "clothing";
 
   if (isInventory && vehicles.length === 0) {
     return (
@@ -50,12 +55,23 @@ export default function InventoryGrid({
     );
   }
 
-  if (!isInventory && parts.length === 0) {
+  if (isParts && parts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center font-inter">
         <p className="text-lg font-semibold text-gray-900">No parts available</p>
         <p className="mt-1 text-sm text-gray-500">
           Check back soon for new parts.
+        </p>
+      </div>
+    );
+  }
+
+  if (isClothing && clothing.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center font-inter">
+        <p className="text-lg font-semibold text-gray-900">No clothing available</p>
+        <p className="mt-1 text-sm text-gray-500">
+          Check back soon for new clothing.
         </p>
       </div>
     );
@@ -81,11 +97,22 @@ export default function InventoryGrid({
         ))}
 
       {!isInventory &&
+        !isClothing &&
         parts.map((part) => (
           <motion.div key={part.id} variants={itemVariants}>
             <PartCard
               part={part}
               onClick={() => router.push(`/part/${part.id}`)}
+            />
+          </motion.div>
+        ))}
+
+      {isClothing &&
+        clothing.map((item) => (
+          <motion.div key={item.id} variants={itemVariants}>
+            <ClothingCard
+              clothing={item}
+              onClick={() => router.push(`/clothing/${item.id}`)}
             />
           </motion.div>
         ))}
