@@ -1,21 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Search } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, X } from "lucide-react";
 import { useGlobalSearch } from "@/hooks";
 import type { SearchResult } from "@/types";
 
-interface SearchBarProps {
-  onClose?: () => void;
-}
+const PLACEHOLDERS = [
+  "Search vehicles, parts and clothing...",
+  "Find your dream car...",
+  "Looking for auto parts?",
+  "Discover new clothing styles...",
+  "What are you looking for?",
+];
 
-export default function SearchBar({ onClose }: SearchBarProps) {
+export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult | null>(null);
   const [isSearching, setIsSearching] = useState(false);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { search } = useGlobalSearch();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % PLACEHOLDERS.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSearch = async () => {
     const trimmed = query.trim();
@@ -33,45 +48,58 @@ export default function SearchBar({ onClose }: SearchBarProps) {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") handleSearch();
-    if (e.key === "Escape") onClose?.();
   };
 
   const totalResults =
     (results?.vehicles.length ?? 0) + (results?.parts.length ?? 0) + (results?.clothing.length ?? 0);
 
+  const showOverlay = !query && !isFocused;
+
   return (
-    <div className="relative w-full bg-white shadow-lg">
-      <div className="mx-auto flex max-w-3xl items-center gap-2 px-4 py-3">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Search vehicles, parts and clothing..."
-          className="flex-1 rounded-full border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-mega-blue focus:ring-1 focus:ring-mega-blue font-inter"
-          autoFocus
-        />
+    <div className="border-b border-gray-200 bg-white">
+      <div className="mx-auto flex w-full max-w-4xl items-center gap-2 px-4 py-2">
+        <div className="relative flex-1">
+          <input
+            ref={inputRef}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            className="w-full rounded-full border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 outline-none focus:border-mega-blue focus:ring-1 focus:ring-mega-blue font-inter"
+          />
+
+          {showOverlay && (
+            <div className="pointer-events-none absolute inset-0 flex items-center overflow-hidden px-4">
+              <AnimatePresence mode="popLayout">
+                <motion.span
+                  key={placeholderIndex}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="truncate text-sm text-gray-400 font-inter"
+                >
+                  {PLACEHOLDERS[placeholderIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+          )}
+        </div>
+
         <button
           onClick={handleSearch}
           disabled={isSearching || !query.trim()}
-          className="flex items-center justify-center rounded-full bg-mega-blue p-2 text-white transition-colors hover:bg-mega-blue-dark disabled:opacity-50"
+          className="flex shrink-0 items-center justify-center rounded-full bg-mega-blue p-2 text-white transition-colors hover:bg-mega-blue-dark disabled:opacity-50"
           aria-label="Search"
         >
           <Search className="h-4 w-4" />
         </button>
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="flex items-center justify-center rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100"
-            aria-label="Close search"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        )}
       </div>
 
       {results && query.trim() && totalResults > 0 && (
-        <div className="mx-auto max-h-96 max-w-3xl overflow-y-auto border-t border-gray-200 px-4 pb-4">
+        <div className="mx-auto max-h-96 max-w-4xl overflow-y-auto border-t border-gray-200 px-4 pb-4">
           {results.vehicles.length > 0 && (
             <div className="py-3">
               <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 font-oswald">
@@ -82,7 +110,6 @@ export default function SearchBar({ onClose }: SearchBarProps) {
                   <Link
                     key={v.id}
                     href={`/vehicle/${v.id}`}
-                    onClick={onClose}
                     className="flex items-center gap-3 rounded-lg p-2 transition-colors hover:bg-gray-100"
                   >
                     <div className="relative h-12 w-16 shrink-0 overflow-hidden rounded">
@@ -118,7 +145,6 @@ export default function SearchBar({ onClose }: SearchBarProps) {
                   <Link
                     key={p.id}
                     href={`/part/${p.id}`}
-                    onClick={onClose}
                     className="flex items-center gap-3 rounded-lg p-2 transition-colors hover:bg-gray-100"
                   >
                     <div className="relative h-12 w-16 shrink-0 overflow-hidden rounded">
@@ -154,7 +180,6 @@ export default function SearchBar({ onClose }: SearchBarProps) {
                   <Link
                     key={c.id}
                     href={`/clothing/${c.id}`}
-                    onClick={onClose}
                     className="flex items-center gap-3 rounded-lg p-2 transition-colors hover:bg-gray-100"
                   >
                     <div className="relative h-12 w-16 shrink-0 overflow-hidden rounded">

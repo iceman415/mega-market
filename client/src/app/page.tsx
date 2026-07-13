@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar, HeroCarousel, InventoryGrid, TradeInSection, Footer, FloatingCTA, SearchBar } from "@/components";
 import { useAppStore } from "@/store";
@@ -12,14 +11,12 @@ export default function Home() {
   const { data: vehicles, isLoading: vehiclesLoading } = useVehicles();
   const { data: parts, isLoading: partsLoading } = useParts();
   const { data: clothing, isLoading: clothingLoading } = useClothing();
-  const [showSearch, setShowSearch] = useState(false);
-
   const loading = vehiclesLoading || partsLoading || clothingLoading;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navbar onSearchToggle={() => setShowSearch((s) => !s)} />
-      {showSearch && <SearchBar onClose={() => setShowSearch(false)} />}
+      <Navbar />
+      <SearchBar />
 
       <main className="flex-1">
         {activeSection === "inventory" && !loading && (
