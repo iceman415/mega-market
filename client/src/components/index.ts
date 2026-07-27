@@ -8,6 +8,7 @@ export { default as SearchBar } from "./SearchBar";
 export { default as YouTubeEmbed } from "./YouTubeEmbed";
 export { default as SoldBadge } from "./SoldBadge";
 export { default as ImageViewer } from "./ImageViewer";
+export { default as SectionCarousel } from "./SectionCarousel";
 export { default as VehicleCard } from "./VehicleCard";
 export { default as PartCard } from "./PartCard";
 export { default as ClothingCard } from "./ClothingCard";

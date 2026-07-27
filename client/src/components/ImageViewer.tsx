@@ -33,18 +33,14 @@ export default function ImageViewer({
   }, []);
 
   const goNext = useCallback(() => {
-    if (index < total - 1) {
-      resetZoom();
-      setIndex((i) => i + 1);
-    }
-  }, [index, total, resetZoom]);
+    resetZoom();
+    setIndex((i) => (i + 1) % total);
+  }, [total, resetZoom]);
 
   const goPrev = useCallback(() => {
-    if (index > 0) {
-      resetZoom();
-      setIndex((i) => i - 1);
-    }
-  }, [index, resetZoom]);
+    resetZoom();
+    setIndex((i) => (i - 1 + total) % total);
+  }, [total, resetZoom]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -153,7 +149,7 @@ export default function ImageViewer({
         <X className="h-6 w-6" />
       </button>
 
-      {total > 1 && index > 0 && (
+      {total > 1 && (
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -166,7 +162,7 @@ export default function ImageViewer({
         </button>
       )}
 
-      {total > 1 && index < total - 1 && (
+      {total > 1 && (
         <button
           onClick={(e) => {
             e.stopPropagation();

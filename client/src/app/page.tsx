@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Navbar, HeroCarousel, InventoryGrid, TradeInSection, Footer, FloatingCTA, SearchBar } from "@/components";
+import { Navbar, HeroCarousel, InventoryGrid, TradeInSection, Footer, FloatingCTA, SearchBar, SectionCarousel } from "@/components";
 import { useAppStore } from "@/store";
 import { useVehicles, useParts, useClothing } from "@/hooks";
 import { InventorySkeleton } from "@/components/InventorySkeleton";
@@ -13,19 +13,51 @@ export default function Home() {
   const { data: clothing, isLoading: clothingLoading } = useClothing();
   const loading = vehiclesLoading || partsLoading || clothingLoading;
 
+  const partsCarouselItems = (parts || []).map((p) => ({
+    id: p.id,
+    name: p.name,
+    images: p.images,
+    price: p.price,
+    sold: p.sold,
+    link: `/part/${p.id}`,
+  }));
+
+  const clothingCarouselItems = (clothing || []).map((c) => ({
+    id: c.id,
+    name: c.name,
+    images: c.images,
+    price: c.price,
+    sold: c.sold,
+    link: `/clothing/${c.id}`,
+  }));
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
       <SearchBar />
 
       <main className="flex-1">
-        {activeSection === "inventory" && !loading && (
+        {!loading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <HeroCarousel vehicles={vehicles || []} />
+            {activeSection === "inventory" && (
+              <HeroCarousel vehicles={vehicles || []} />
+            )}
+            {activeSection === "parts" && (
+              <SectionCarousel
+                items={partsCarouselItems}
+                title="Featured Parts & Tires"
+              />
+            )}
+            {activeSection === "clothing" && (
+              <SectionCarousel
+                items={clothingCarouselItems}
+                title="Featured Clothing"
+              />
+            )}
           </motion.div>
         )}
 

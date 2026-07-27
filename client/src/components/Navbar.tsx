@@ -20,14 +20,23 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-md">
       <div className="flex items-center justify-between px-2 sm:px-8 py-2 sm:py-3 gap-1 sm:gap-2">
-        <Image
-          src="/logotype-mega-market.png"
-          alt="MEGA MARKET"
-          width={120}
-          height={30}
-          className="h-8 sm:h-10 w-auto shrink-0"
-          priority
-        />
+        <button
+          onClick={() => {
+            setActiveSection("inventory");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="shrink-0 cursor-pointer"
+          aria-label="Go to top"
+        >
+          <Image
+            src="/logotype-mega-market.png"
+            alt="MEGA MARKET"
+            width={120}
+            height={30}
+            className="h-8 sm:h-10 w-auto shrink-0"
+            priority
+          />
+        </button>
 
         <div className="flex items-center gap-1 sm:gap-2">
           <motion.button
