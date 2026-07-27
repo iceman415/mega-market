@@ -3,6 +3,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+
+const SWIPE_OFFSET_THRESHOLD = 50;
+const SWIPE_VELOCITY_THRESHOLD = 500;
 
 interface ImageViewerProps {
   images: string[];
@@ -130,6 +134,21 @@ export default function ImageViewer({
     }
   };
 
+  const handleSwipeEnd = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: { offset: { x: number }; velocity: { x: number } },
+  ) => {
+    const isSwipeRight =
+      info.offset.x > SWIPE_OFFSET_THRESHOLD ||
+      info.velocity.x > SWIPE_VELOCITY_THRESHOLD;
+    const isSwipeLeft =
+      info.offset.x < -SWIPE_OFFSET_THRESHOLD ||
+      info.velocity.x < -SWIPE_VELOCITY_THRESHOLD;
+
+    if (isSwipeRight) goPrev();
+    if (isSwipeLeft) goNext();
+  };
+
   if (total === 0) return null;
 
   return (
@@ -175,8 +194,13 @@ export default function ImageViewer({
         </button>
       )}
 
-      <div
+      <motion.div
         className="relative flex h-full w-full items-center justify-center overflow-hidden"
+        drag={scale === 1 && total > 1 ? "x" : false}
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.2}
+        dragMomentum={false}
+        onDragEnd={handleSwipeEnd}
         onWheel={handleWheel}
         onDoubleClick={handleDoubleClick}
         onPointerDown={handlePointerDown}
@@ -205,7 +229,7 @@ export default function ImageViewer({
           sizes="100vw"
           priority
         />
-      </div>
+      </motion.div>
 
       {total > 1 && (
         <div className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-white/10 px-4 py-2 text-sm text-white backdrop-blur-sm">
