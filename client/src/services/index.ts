@@ -2,10 +2,20 @@ import axios from "axios";
 import { config } from "@/config";
 import { Vehicle, Part, Clothing, SearchResult, AuthResponse, VerifyResponse } from "@/types";
 import { useAuthStore } from "@/store";
+import { saveToken, getStoredToken, clearToken } from "@/lib/tokenStorage";
 
 const api = axios.create({
   baseURL: config.apiUrl + "/api",
   withCredentials: true,
+});
+
+// The token travels as an httpOnly cookie by default. Browsers that block
+// cross-site cookies (Safari/iOS, content blockers, private mode) never send
+// it, so we also attach the token stored at login as a Bearer header.
+api.interceptors.request.use((request) => {
+  const token = getStoredToken();
+  if (token) request.headers.set("Authorization", `Bearer ${token}`);
+  return request;
 });
 
 api.interceptors.response.use(
@@ -54,14 +64,25 @@ export const searchService = {
 };
 
 export const authService = {
-  login: (email: string, password: string) =>
-    api.post<AuthResponse>("/auth/login", { email, password }).then((r) => r.data),
+  login: async (email: string, password: string) => {
+    const data = await api
+      .post<AuthResponse>("/auth/login", { email, password })
+      .then((r) => r.data);
+    saveToken(data.token);
+    return data;
+  },
   verify: () => api.get<VerifyResponse>("/auth/verify").then((r) => r.data),
   register: (name: string, email: string, password: string) =>
     api.post("/auth/register", { name, email, password }).then((r) => r.data),
   changePassword: (currentPassword: string, newPassword: string) =>
     api.put("/auth/password", { currentPassword, newPassword }).then((r) => r.data),
-  logout: () => api.post("/auth/logout").then((r) => r.data),
+  logout: async () => {
+    try {
+      return await api.post("/auth/logout").then((r) => r.data);
+    } finally {
+      clearToken();
+    }
+  },
 };
 
 export const uploadService = {

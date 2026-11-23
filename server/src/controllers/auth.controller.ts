@@ -44,6 +44,10 @@ export const authController = {
 
     res.json({
       user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      // The token is also returned in the body so clients can keep a
+      // localStorage fallback for browsers that block cross-site cookies
+      // (Safari/iOS). Cookies remain the primary mechanism.
+      token,
     });
   },
 
